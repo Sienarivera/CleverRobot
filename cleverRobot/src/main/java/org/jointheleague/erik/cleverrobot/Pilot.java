@@ -17,7 +17,7 @@ public class Pilot extends IRobotAdapter {
     private static final double ENCODER_COUNTS_PER_REVOLUTION = 508.8;
 
     private final Dashboard dashboard;
-//    public UltraSonicSensors sonar;
+//    public UltraSonicSensors sonar; hgfytfytrsfxhgihilhihuig
 
     private int startLeft;
     private int startRight;
