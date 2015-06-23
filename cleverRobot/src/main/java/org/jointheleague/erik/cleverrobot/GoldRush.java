@@ -9,6 +9,7 @@ import org.jointheleague.erik.irobot.IRobotInterface;
 import ioio.lib.api.IOIO;
 import ioio.lib.api.exception.ConnectionLostException;
 
+
 public class GoldRush extends IRobotAdapter{
     private static final String TAG = "Pilot";
     // The following measurements are taken from the interface specification
@@ -16,7 +17,7 @@ public class GoldRush extends IRobotAdapter{
     private static final double WHEEL_DIAMETER = 72.0; //in mm
     private static final double ENCODER_COUNTS_PER_REVOLUTION = 508.8;
 
-    private final Dashboard dashboard;
+    private final Dashboard2 dashboard;
 //    public UltraSonicSensors sonar; hgfytfytrsfxhgihilhihuig
 
     private int startLeft;
@@ -27,6 +28,7 @@ public class GoldRush extends IRobotAdapter{
     private int directionRight;
     private static final int STRAIGHT_SPEED = 200;
     private static final int TURN_SPEED = 100;
+    int infrared = getInfraredByte();
 
     private int currentCommand = 0;
     private final boolean debug = false; // Set to true to get debug messages.
@@ -36,9 +38,11 @@ public class GoldRush extends IRobotAdapter{
         super(iRobot);
 //        sonar = new UltraSonicSensors(ioio);
         this.dashboard = dashboard;
+
+
     }
 
-    /* This method is executed when the robot first starts up. */
+    /* This method is executed when the robot first startup. */
     public void initialize() throws ConnectionLostException {
         dashboard.log(dashboard.getString(R.string.hello));
         //what would you like me to do, Clever Human?
@@ -50,14 +54,21 @@ public class GoldRush extends IRobotAdapter{
     /* This method is called repeatedly. */
     public void loop() throws ConnectionLostException {
 
-        driveDirect(100,100);
+        driveDirect(300, 300);
+        SystemClock.sleep(500);
+        driveDirect(300, 100);
         SystemClock.sleep(500);
         readSensors(SENSORS_INFRARED_BYTE);
         readSensors (SENSORS_BUMPS_AND_WHEEL_DROPS);
 
-        if (getInfraredByte(248)){
 
+        if (infrared==248){
+            driveDirect(-300,-300);
+            SystemClock.sleep(500);
+        }
 
+        if (infrared == 2){
+            
         }
 
         if (isBumpLeft()){
