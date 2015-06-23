@@ -9,8 +9,7 @@ import org.jointheleague.erik.irobot.IRobotInterface;
 import ioio.lib.api.IOIO;
 import ioio.lib.api.exception.ConnectionLostException;
 
-public class Pilot extends IRobotAdapter {
-
+public class GoldRush extends IRobotAdapter{
     private static final String TAG = "Pilot";
     // The following measurements are taken from the interface specification
     private static final double WHEEL_DISTANCE = 235.0; //in mm
@@ -32,7 +31,7 @@ public class Pilot extends IRobotAdapter {
     private int currentCommand = 0;
     private final boolean debug = false; // Set to true to get debug messages.
 
-    public Pilot(IRobotInterface iRobot, Dashboard dashboard, IOIO ioio)
+    public GoldRush(IRobotInterface iRobot, Dashboard2 dashboard, IOIO ioio)
             throws ConnectionLostException {
         super(iRobot);
 //        sonar = new UltraSonicSensors(ioio);
@@ -51,8 +50,15 @@ public class Pilot extends IRobotAdapter {
     /* This method is called repeatedly. */
     public void loop() throws ConnectionLostException {
 
-        driveDirect(999,999);
+        driveDirect(100,100);
+        SystemClock.sleep(500);
+        readSensors(SENSORS_INFRARED_BYTE);
         readSensors (SENSORS_BUMPS_AND_WHEEL_DROPS);
+
+        if (getInfraredByte(248)){
+
+
+        }
 
         if (isBumpLeft()){
             driveDirect(-400,-400);
@@ -61,7 +67,7 @@ public class Pilot extends IRobotAdapter {
             SystemClock.sleep(500);
         }
 
-        if (isBumpRight()) {
+        else if (isBumpRight()) {
             driveDirect(-400,-400);
             SystemClock.sleep(500);
             driveDirect(50,200);
@@ -69,5 +75,4 @@ public class Pilot extends IRobotAdapter {
         }
 
     }
-
 }
