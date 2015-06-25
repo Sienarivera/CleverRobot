@@ -1,7 +1,6 @@
 package org.jointheleague.erik.cleverrobot;
 
 import android.os.SystemClock;
-import android.util.Log;
 
 import org.jointheleague.erik.irobot.IRobotAdapter;
 import org.jointheleague.erik.irobot.IRobotInterface;
@@ -18,7 +17,12 @@ public class Pilot extends IRobotAdapter {
     private static final double ENCODER_COUNTS_PER_REVOLUTION = 508.8;
 
     private final Dashboard dashboard;
-    //    public UltraSonicSensors sonar;
+
+    //    public UltraSonicSensors sonar;asdfa sdf asdf asdf
+
+    public UltrasonicSonicSensors sonar;
+
+
     private int startLeft;
     private int startRight;
     private int countsToGoWheelLeft;
@@ -38,7 +42,7 @@ public class Pilot extends IRobotAdapter {
     public Pilot(IRobotInterface iRobot, Dashboard dashboard, IOIO ioio)
             throws ConnectionLostException {
         super(iRobot);
-//        sonar = new UltraSonicSensors(ioio);
+        sonar = new UltrasonicSonicSensors(ioio, dashboard);
         this.dashboard = dashboard;
 
 
@@ -58,9 +62,22 @@ public class Pilot extends IRobotAdapter {
 
     /* This method is called repeatedly. */
     public void loop() throws ConnectionLostException {
+        try {
+            sonar.read();
+            dashboard.log("" + sonar.getFrontDistance());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+//
+        driveDirect(999, 999);
+        readSensors(SENSORS_BUMPS_AND_WHEEL_DROPS);
+
 
         readSensors(SENSORS_ANGLE);
         angle += getAngle();
+
+
 
 //
 //        driveDirect(300, 300);
@@ -79,17 +96,16 @@ public class Pilot extends IRobotAdapter {
             if (infrared == 244 && infrared == 248) {
                 dashboard.log("both");
                 driveDirect(300, 300);
-                SystemClock.sleep(10000);
+
 
             } else if (infrared == 248) {
                 dashboard.log("red");
                 driveDirect(200, 300);
-                SystemClock.sleep(1000);
 
             } else if (infrared == 244) {
                 dashboard.log("green");
                 driveDirect(300, 200);
-                SystemClock.sleep(1000);
+
 
 
             }
