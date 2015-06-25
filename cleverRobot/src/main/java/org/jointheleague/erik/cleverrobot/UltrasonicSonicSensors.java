@@ -1,4 +1,4 @@
-package org.jointheleague.iaroc.sensors;
+package org.jointheleague.erik.cleverrobot;
 
 /**************************************************************************
  * Simplified version 140512A by Erik  Super Happy Version
@@ -12,7 +12,7 @@ import ioio.lib.api.PulseInput.PulseMode;
 import ioio.lib.api.exception.ConnectionLostException;
 import android.os.SystemClock;
 
-import org.jointheleague.iaroc.Dashboard;
+
 
 /**
  * An UltraSonicSensors instance is used to access three ultrasonic sensors
@@ -21,7 +21,7 @@ import org.jointheleague.iaroc.Dashboard;
  * suggestions...cleaned up formatting
  * @author Erik Colban
  */
-public class UltraSonicSensors
+public class UltrasonicSonicSensors
 {
     private static final float CONVERSION_FACTOR = 17280.0F; // cm/s
     private static int LEFT_ULTRASONIC_INPUT_PIN = 35;
@@ -47,7 +47,7 @@ public class UltraSonicSensors
      * @param ioio the IOIO instance used to communicate with the sensor
      * @throws ConnectionLostException
      */
-    public UltraSonicSensors(IOIO ioio, Dashboard dashboard) throws ConnectionLostException
+    public UltrasonicSonicSensors(IOIO ioio, Dashboard dashboard) throws ConnectionLostException
     {
         this.ioio = ioio;
         this.leftStrobe = ioio.openDigitalOutput(LEFT_STROBE_ULTRASONIC_OUTPUT_PIN);
